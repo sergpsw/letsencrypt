@@ -1,3 +1,4 @@
+
 #!/bin/bash
 
 OS1=$(awk '/DISTRIB_ID=/' /etc/*-release | sed 's/DISTRIB_ID=//' | tr '[:upper:]' '[:lower:]')
@@ -11,7 +12,7 @@ if [[ "$OS1" == "ubuntu" || "$OS1" == "debian" ]]
         sudo add-apt-repository ppa:certbot/certbot -y
         sudo apt-get update
         sudo apt-get install certbot python-certbot-nginx -y 
-        echo -e "$1\na\nn\ny" | sudo certbot --nginx
+        echo -e "$1\na\n2\ny\n" | sudo certbot --nginx
         sudo cp -f nginx default /etc/nginx/sites-enabled/default
         sudo crontab -e
     elif [[ `ps -acx|grep apache|wc -l` > 0 ]]
@@ -21,8 +22,7 @@ if [[ "$OS1" == "ubuntu" || "$OS1" == "debian" ]]
         sudo add-apt-repository ppa:certbot/certbot -y
         sudo apt-get update
         sudo apt-get install certbot python-certbot-apache -y
-        echo "Install Apach !!!"
-        echo -e "$1\na\nn\ny"  | sudo certbot --apache 
+        echo -e "$1\na\n2\ny\n"  | sudo certbot --apache 
         sudo cp -f default-ssl.conf /etc/apache2/sites-available/default-ssl.conf
         sudo crontab -e
     else echo -e "Server not install!\n\n For install nginx can run:\n 1. sudo apt-get update\n 2. sudo apt-get install nginx -y\n\n For install apache can run:\n 1. sudo apt-get update\n 2. sudo apt-get install apache2 -y"
@@ -36,8 +36,8 @@ elif [[ "$OS2" == "centos" || "$OS2" == "redhat" ]]
 	sudo yum -y install yum-utils
         sudo yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-RE$
         sudo yum install certbot python2-certbot-nginx -y
-        echo -e "$1\na\nn\ny" | sudo certbot --nginx
-        # sudo cp -f nginx.conf /etc/nginx.conf
+        echo -e "$1\na\n2\ny\n" | sudo certbot --nginx
+        sudo cp -f nginx.conf /etc/nginx.conf
         sudo crontab -e
     elif [[ `ls -a /etc |grep httpd` ]]
       then
@@ -45,7 +45,7 @@ elif [[ "$OS2" == "centos" || "$OS2" == "redhat" ]]
 	sudo yum -y install yum-utils
         sudo yum-config-manager --enable rhui-REGION-rhel-server-extras rhui-REGION-rhel-server-optional
         sudo yum install certbot python2-certbot-apache
-        echo -e "$1\na\nn\ny" | sudo certbot certonly --apache # && xdotool key KP_Enter
+        echo -e "$1\na\n2\ny\n" | sudo certbot certonly --apache
         # sudo cp - httpd.conf /etc/httpd/conf/httpd.conf
         sudo crontab -e
     else echo -e "Server not install!\n Fod install nginx can run:\n 1. sudo yum install epel-release -y\n 2. sudo yum update -y\n 3. sudo yum install nginx -y\n \n Fod install apache can run:\n 1. sudo yum update httpd -y\n 2. sudo yum install httpd -y"
